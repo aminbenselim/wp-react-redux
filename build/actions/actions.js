@@ -15,7 +15,7 @@ export const GET_POST_FAILURE = 'GET_POST_FAILURE';
 export function getPosts() {
   const request = axios({
     method: 'get',
-    url: '/wordpress/wp-json/wp/v2/posts',
+    url: '/nidhal/wp-json/wp/v2/posts',
     headers: []
   });
 
@@ -42,7 +42,7 @@ export function getPostsFailure(error) {
 
 // Single Post action creators
 export function getPost(id) {
-  const request = axios.get(`/wordpress/wp-json/wp/v2/posts/${id}`);
+  const request = axios.get(`/nidhal/wp-json/wp/v2/posts/${id}`);
 
   return {
     type: GET_POST,

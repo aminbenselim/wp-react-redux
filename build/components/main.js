@@ -4,12 +4,10 @@ import {Link} from 'react-router';
 
 class Main extends Component {
   componentWillMount() {
-    console.log("component will mount of Main" + this.props);
     this.props.getPosts();
   }
 
   componentDidMount() {
-    console.log("component did mount of Main" + this.props);
   }
   renderPosts(posts) {
     return posts.map((post) => {

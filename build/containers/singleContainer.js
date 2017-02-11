@@ -16,12 +16,14 @@ const mapDispatchToProps = (dispatch) => {
     getPost: (id) => {
       dispatch(getPost(id))
         .then((result) => {
+          console.log(id);
           // Note: Error's "data" is in result.payload.response.data (inside "response")
           // success's "data" is in result.payload.data
           if (result.payload.response && result.payload.response.status !== 200) {
             dispatch(getPostFailure(result.payload.response.data));
             console.log('here');
           } else {
+            console.log(result.payload.data);
             dispatch(getPostSuccess(result.payload.data))
           }
         })

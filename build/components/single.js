@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 class singlePost extends Component {
 
   componentDidMount() {
-    console.log("component did mouint of single" + this.props);
     this.props.getPost(this.props.params.id);
   }
 
@@ -20,8 +19,15 @@ class singlePost extends Component {
 
     return (
       <div className="container">
+        <Link  to={"/"} > return home </Link>
         <h3 dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
         <div dangerouslySetInnerHTML={{__html: post.content.rendered}}></div>
+        <ul> 
+          <li> <Link  to={"post/"+ post.next_post.id} 
+          dangerouslySetInnerHTML={{__html: post.next_post.title}} />  </li>
+          <li> <Link  to={"post/"+ post.previous_post.id} 
+           dangerouslySetInnerHTML={{__html: post.previous_post.title}} /></li>
+        </ul>
       </div>
     );
   }

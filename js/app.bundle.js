@@ -4627,7 +4627,7 @@ var GET_POST_FAILURE = exports.GET_POST_FAILURE = 'GET_POST_FAILURE';
 function getPosts() {
   var request = (0, _axios2.default)({
     method: 'get',
-    url: '/wordpress/wp-json/wp/v2/posts',
+    url: '/nidhal/wp-json/wp/v2/posts',
     headers: []
   });
 
@@ -4653,7 +4653,7 @@ function getPostsFailure(error) {
 
 // Single Post action creators
 function getPost(id) {
-  var request = _axios2.default.get('/wordpress/wp-json/wp/v2/posts/' + id);
+  var request = _axios2.default.get('/nidhal/wp-json/wp/v2/posts/' + id);
 
   return {
     type: GET_POST,
@@ -15084,14 +15084,11 @@ var Main = function (_Component) {
   _createClass(Main, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      console.log("component will mount of Main" + this.props);
       this.props.getPosts();
     }
   }, {
     key: 'componentDidMount',
-    value: function componentDidMount() {
-      console.log("component did mount of Main" + this.props);
-    }
+    value: function componentDidMount() {}
   }, {
     key: 'renderPosts',
     value: function renderPosts(posts) {
@@ -15263,7 +15260,6 @@ var singlePost = function (_Component) {
   _createClass(singlePost, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log("component did mouint of single" + this.props);
       this.props.getPost(this.props.params.id);
     }
   }, {
@@ -15293,8 +15289,32 @@ var singlePost = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: "/" },
+          ' return home '
+        ),
         _react2.default.createElement('h3', { dangerouslySetInnerHTML: { __html: post.title.rendered } }),
-        _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: post.content.rendered } })
+        _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: post.content.rendered } }),
+        _react2.default.createElement(
+          'ul',
+          null,
+          _react2.default.createElement(
+            'li',
+            null,
+            ' ',
+            _react2.default.createElement(_reactRouter.Link, { to: "post/" + post.next_post.id,
+              dangerouslySetInnerHTML: { __html: post.next_post.title } }),
+            '  '
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            ' ',
+            _react2.default.createElement(_reactRouter.Link, { to: "post/" + post.previous_post.id,
+              dangerouslySetInnerHTML: { __html: post.previous_post.title } })
+          )
+        )
       );
     }
   }]);
@@ -15379,12 +15399,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     getPost: function getPost(id) {
       dispatch((0, _actions.getPost)(id)).then(function (result) {
+        console.log(id);
         // Note: Error's "data" is in result.payload.response.data (inside "response")
         // success's "data" is in result.payload.data
         if (result.payload.response && result.payload.response.status !== 200) {
           dispatch((0, _actions.getPostFailure)(result.payload.response.data));
           console.log('here');
         } else {
+          console.log(result.payload.data);
           dispatch((0, _actions.getPostSuccess)(result.payload.data));
         }
       });
