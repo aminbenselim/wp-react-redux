@@ -9,6 +9,7 @@ export const GET_POSTS_FAILURE = 'GET_POSTS_FAILURE';
 export const GET_POST = 'GET_POST';
 export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 export const GET_POST_FAILURE = 'GET_POST_FAILURE';
+export const RESET_POST = 'RESET_POST';
 
 
 // Posts List action creators
@@ -63,4 +64,10 @@ export function getPostFailure(error) {
     type: GET_POST_FAILURE,
     payload: error
   };
+}
+
+export function resetPost(){
+  return {
+    type: RESET_POST
+  }
 }

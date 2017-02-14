@@ -2,11 +2,17 @@ import React, { Component} from 'react';
 import { Link } from 'react-router';
 
 class singlePost extends Component {
+  componentWillReceiveProps(nextprops){
+    if(this.props.params.id !== nextprops.params.id)     this.props.getPost(nextprops.params.id);
+  }
 
   componentDidMount() {
     this.props.getPost(this.props.params.id);
   }
 
+  componentWillUnmount() {
+    this.props.resetPost();
+  } 
   render() {
     const { post, loading, error } = this.props.currentPost;
     if (loading) {

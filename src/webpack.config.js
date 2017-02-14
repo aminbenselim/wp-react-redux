@@ -6,7 +6,7 @@ module.exports = {
     entry: './index.js',
     output: {
         path: path.join( __dirname, '../js' ),
-        filename: 'app.bundle.js'
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
