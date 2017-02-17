@@ -8,7 +8,7 @@ import {
 
 const INITIAL_STATE = {post:null, error:null, loading: false};
 
-export default function(state = INITIAL_STATE, action) {
+const Post = (state = INITIAL_STATE, action) => {
   let error;
   switch(action.type) {
   case GET_POST:
@@ -24,3 +24,5 @@ export default function(state = INITIAL_STATE, action) {
     return state;
   }
 }
+
+export default Post;

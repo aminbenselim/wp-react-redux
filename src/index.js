@@ -6,7 +6,10 @@ import routes from './routes';
 import configureStore from './store/configureStore.js';
 
 
-const store = configureStore();
+const persistedState = localStorage.getItem('State') ? JSON.parse(localStorage.getItem('State')) : {}
+
+const store = configureStore(persistedState);
+
 
 
 ReactDOM.render(
@@ -14,3 +17,6 @@ ReactDOM.render(
     <Router history={hashHistory} routes={routes} />
   </Provider>
   ,document.getElementById('main'));
+
+export default store;
+

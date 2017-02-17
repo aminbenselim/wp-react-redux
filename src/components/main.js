@@ -9,12 +9,9 @@ class Main extends Component {
     this.loadMoreButton = this.loadMoreButton.bind(this);
   }
   componentWillMount() {
-    console.log(this.currentPage);
     this.props.getPosts(this.currentPage);
   }
 
-  componentDidMount() {
-  }
   renderPosts(posts) {
     return posts.map(post => {
       return (
