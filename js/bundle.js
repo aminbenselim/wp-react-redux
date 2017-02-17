@@ -4639,10 +4639,11 @@ function getPosts(page) {
   };
 }
 
-function getPostsSuccess(posts) {
+function getPostsSuccess(posts, totalpages) {
   return {
     type: GET_POSTS_SUCCESS,
-    payload: posts
+    payload: posts,
+    totalpages: totalpages
   };
 }
 
@@ -15090,79 +15091,99 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Main = function (_Component) {
   _inherits(Main, _Component);
 
-  function Main() {
+  function Main(props) {
     _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+    _this.currentPage = 1;
+    _this.loadMoreButton = _this.loadMoreButton.bind(_this);
+    return _this;
   }
 
   _createClass(Main, [{
-    key: 'componentWillMount',
+    key: "componentWillMount",
     value: function componentWillMount() {
-      this.props.getPosts(1);
+      console.log(this.currentPage);
+      this.props.getPosts(this.currentPage);
     }
   }, {
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {}
   }, {
-    key: 'renderPosts',
+    key: "renderPosts",
     value: function renderPosts(posts) {
       return posts.map(function (post) {
-        // var shortText = post.content.rendered.split('')
-        // .slice(0,post.content.rendered.indexOf('</p>')).join('') + '</p>';
         return _react2.default.createElement(
-          'div',
-          { key: post.id, className: 'post' },
+          "div",
+          { key: post.id, className: "post" },
           _react2.default.createElement(
             _reactRouter.Link,
-            { style: { color: 'black' }, to: "post/" + post.id },
-            _react2.default.createElement('h3', { dangerouslySetInnerHTML: { __html: post.title.rendered } })
+            { style: { color: "black" }, to: "post/" + post.id },
+            _react2.default.createElement("h3", { dangerouslySetInnerHTML: { __html: post.title.rendered } })
           ),
-          _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: post.excerpt.rendered } })
+          _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: post.excerpt.rendered } })
         );
       });
     }
   }, {
-    key: 'render',
+    key: "loadMoreButton",
+    value: function loadMoreButton(totalpages) {
+      var clickHandler = function clickHandler() {
+        this.currentPage += 1;
+        this.props.getPosts(this.currentPage);
+      };
+      clickHandler = clickHandler.bind(this);
+      if (this.currentPage < totalpages) {
+        return _react2.default.createElement(
+          "button",
+          { onClick: clickHandler },
+          "load more "
+        );
+      }
+    }
+  }, {
+    key: "render",
     value: function render() {
       var _props$postsList = this.props.postsList,
           posts = _props$postsList.posts,
           loading = _props$postsList.loading,
-          error = _props$postsList.error;
-
+          error = _props$postsList.error,
+          totalpages = _props$postsList.totalpages;
 
       if (loading) {
         return _react2.default.createElement(
-          'div',
-          { className: 'container' },
+          "div",
+          { className: "container" },
           _react2.default.createElement(
-            'h1',
+            "h1",
             null,
-            'Posts'
+            "Posts"
           ),
           _react2.default.createElement(
-            'h3',
+            "h3",
             null,
-            'Loading...'
+            "Loading..."
           )
         );
       } else if (error) {
         return _react2.default.createElement(
-          'div',
-          { className: 'alert alert-danger' },
-          'Error: ',
+          "div",
+          { className: "alert alert-danger" },
+          "Error: ",
           error.message
         );
       }
 
       return _react2.default.createElement(
-        'div',
-        { className: 'container' },
+        "div",
+        { className: "container" },
         _react2.default.createElement(
-          'ul',
-          { className: 'post-list' },
+          "ul",
+          { className: "post-list" },
           this.renderPosts(posts)
-        )
+        ),
+        this.loadMoreButton(totalpages)
       );
     }
   }]);
@@ -15466,7 +15487,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     getPosts: function getPosts(page) {
       dispatch((0, _actions.getPosts)(page)).then(function (response) {
         if (!response.error) {
-          dispatch((0, _actions.getPostsSuccess)(response.payload.data));
+          dispatch((0, _actions.getPostsSuccess)(response.payload.data, +response.payload.headers['x-wp-totalpages']));
         } else {
           dispatch((0, _actions.getPostsFailure)(response.payload.data));
         }
@@ -15522,7 +15543,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps, null, { pure: false })(_single2.default);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_single2.default);
 
 /***/ }),
 /* 162 */
@@ -15544,14 +15565,14 @@ exports.default = function () {
 
     case _actions.GET_POSTS:
       // start fetching posts and set loading = true
-      return { posts: [], error: null, loading: true };
+      return { posts: [], error: null, loading: true, totalpages: 0 };
     case _actions.GET_POSTS_SUCCESS:
       // return list of posts and make loading = false
-      return { posts: action.payload, error: null, loading: false };
+      return { posts: action.payload, error: null, loading: false, totalpages: action.totalpages };
     case _actions.GET_POSTS_FAILURE:
       // return error and make loading = false
       error = action.payload || { message: action.payload.message }; //2nd one is network or server down errors
-      return { posts: [], error: error, loading: false };
+      return { posts: [], error: error, loading: false, totalpages: 0 };
     default:
       return state;
   }
@@ -15559,7 +15580,7 @@ exports.default = function () {
 
 var _actions = __webpack_require__(36);
 
-var INITIAL_STATE = { posts: [], error: null, loading: false };
+var INITIAL_STATE = { posts: [], error: null, loading: false, totalpages: 0 };
 
 /***/ }),
 /* 163 */

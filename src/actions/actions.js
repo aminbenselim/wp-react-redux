@@ -26,10 +26,11 @@ export function getPosts(page) {
   };
 }
 
-export function getPostsSuccess(posts) {
+export function getPostsSuccess(posts,totalpages) {
   return {
     type: GET_POSTS_SUCCESS,
-    payload: posts
+    payload: posts,
+    totalpages
   };
 }
 

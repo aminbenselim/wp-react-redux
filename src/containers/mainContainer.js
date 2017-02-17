@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getPosts(page))
       .then((response) => {
             if(!response.error){
-              dispatch(getPostsSuccess(response.payload.data));
+              dispatch(getPostsSuccess(response.payload.data,+response.payload.headers['x-wp-totalpages']));
             } else {
               dispatch(getPostsFailure(response.payload.data));
             }
