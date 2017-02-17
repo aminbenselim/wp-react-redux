@@ -12,7 +12,7 @@ class Main extends Component {
   renderPosts(posts) {
     return posts.map((post) => {
      return (
-        <div key={post.id}>
+        <div key={post.id} className="post">
           <Link style={{color:'black'}} to={"post/"+ post.id}>
             <h3 dangerouslySetInnerHTML={{__html: post.title.rendered}}></h3>
           </Link>       
@@ -32,8 +32,7 @@ class Main extends Component {
 
     return (
       <div className="container">
-        <h1>Posts</h1>
-        <ul className="list-group">
+        <ul className="post-list">
         {this.renderPosts(posts)}
         </ul>
       </div>

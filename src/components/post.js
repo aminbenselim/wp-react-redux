@@ -8,9 +8,9 @@ class Post extends Component {
         const content = this.props.content;
         return (
             <div >
-            <Link style={{color:'black'}} to={this.props.id.toString}>
-            <h3>{title}</h3>
-          </Link>
+              <Link style={{color:'black'}} to={this.props.id.toString}>
+                <h3>{title}</h3>
+              </Link>
             </div>
         );
     }

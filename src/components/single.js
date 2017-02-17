@@ -3,9 +3,12 @@ import { Link } from 'react-router';
 
 class singlePost extends Component {
   componentWillReceiveProps(nextprops){
-    if(this.props.params.id !== nextprops.params.id)     this.props.getPost(nextprops.params.id);
+    if(this.props.params.id !== nextprops.params.id) this.props.getPost(nextprops.params.id);
   }
 
+  componentDidUpdate(){
+    window.scrollTo(0,0);  
+  }
   componentDidMount() {
     this.props.getPost(this.props.params.id);
   }
@@ -13,6 +16,26 @@ class singlePost extends Component {
   componentWillUnmount() {
     this.props.resetPost();
   } 
+  renderNextPrev(post) {
+    if(!post.previous_post) {
+      return (<ul> 
+         <li> <Link  to={"post/"+ post.next_post.id} 
+          dangerouslySetInnerHTML={{__html: post.next_post.title}} />  </li>
+        </ul>);
+    }
+     if(!post.next_post) {
+      return (<ul> 
+          <li> <Link  to={"post/"+ post.previous_post.id} 
+           dangerouslySetInnerHTML={{__html: post.previous_post.title}} /></li>
+        </ul>);
+    }
+      return (<ul> 
+         <li> <Link  to={"post/"+ post.next_post.id} 
+          dangerouslySetInnerHTML={{__html: post.next_post.title}} />  </li>
+          <li> <Link  to={"post/"+ post.previous_post.id} 
+           dangerouslySetInnerHTML={{__html: post.previous_post.title}} /></li>
+        </ul>);     
+  }
   render() {
     const { post, loading, error } = this.props.currentPost;
     if (loading) {
@@ -23,17 +46,13 @@ class singlePost extends Component {
       return <span />
     }
 
+
     return (
-      <div className="container">
+      <div className="single">
         <Link  to={"/"} > return home </Link>
-        <h3 dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
-        <div dangerouslySetInnerHTML={{__html: post.content.rendered}}></div>
-        <ul> 
-          <li> <Link  to={"post/"+ post.next_post.id} 
-          dangerouslySetInnerHTML={{__html: post.next_post.title}} />  </li>
-          <li> <Link  to={"post/"+ post.previous_post.id} 
-           dangerouslySetInnerHTML={{__html: post.previous_post.title}} /></li>
-        </ul>
+        <h3 className='single title' dangerouslySetInnerHTML={{__html: post.title.rendered}}/>
+        <div className='single content' dangerouslySetInnerHTML={{__html: post.content.rendered}}></div>
+        {this.renderNextPrev(post)}
       </div>
     );
   }
