@@ -15164,7 +15164,16 @@ var Main = function (_Component) {
             { style: { color: "black" }, to: "post/" + post.id },
             _react2.default.createElement("h3", { dangerouslySetInnerHTML: { __html: post.title.rendered } })
           ),
-          _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: post.excerpt.rendered } })
+          _react2.default.createElement("div", { dangerouslySetInnerHTML: { __html: post.excerpt.rendered } }),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: "post/" + post.id },
+            _react2.default.createElement(
+              "h4",
+              null,
+              "read more"
+            )
+          )
         );
       });
     }
@@ -15336,12 +15345,23 @@ var singlePost = function (_Component) {
   _createClass(singlePost, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextprops) {
-      if (this.props.params.id !== nextprops.params.id) this.props.getPost(nextprops.params.id);
+      if (this.props.params.id !== nextprops.params.id) {
+        this.scrollToTop(nextprops.params.id);
+      }
     }
   }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      window.scrollTo(0, 0);
+    key: 'scrollToTop',
+    value: function scrollToTop(id) {
+      var getPost = this.props.getPost;
+      var s = setInterval(function () {
+        var pos = window.pageYOffset;
+        if (pos > 0) {
+          window.scrollTo(0, pos - 20);
+          if (pos < 40) getPost(id);
+        } else {
+          clearInterval(s);
+        }
+      }, 16);
     }
   }, {
     key: 'componentDidMount',
@@ -15532,7 +15552,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       dispatch((0, _actions.getPosts)(page)).then(function (response) {
         if (!response.error) {
           posts = posts.concat(response.payload.data);
-          console.log(posts);
           dispatch((0, _actions.getPostsSuccess)(posts, +response.payload.headers['x-wp-totalpages']));
         } else {
           dispatch((0, _actions.getPostsFailure)(response.payload.data));

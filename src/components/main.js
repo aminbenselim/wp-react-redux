@@ -20,6 +20,9 @@ class Main extends Component {
             <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
           </Link>
           <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
+           <Link to={"post/" + post.id}>
+            <h4>read more</h4>
+          </Link>
         </div>
       );
     });

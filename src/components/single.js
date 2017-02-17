@@ -3,12 +3,24 @@ import { Link } from 'react-router';
 
 class singlePost extends Component {
   componentWillReceiveProps(nextprops){
-    if(this.props.params.id !== nextprops.params.id) this.props.getPost(nextprops.params.id);
+    if(this.props.params.id !== nextprops.params.id) {
+      this.scrollToTop(nextprops.params.id);
+    }
   }
 
-  componentDidUpdate(){
-    window.scrollTo(0,0);  
+  scrollToTop(id){
+    const getPost = this.props.getPost;
+    var s = setInterval(function() {
+    var pos = window.pageYOffset;
+    if ( pos > 0 ) {
+        window.scrollTo( 0, pos - 20 );
+        if(pos < 40)  getPost(id);
+    } else {
+      clearInterval(s);
+    }
+   }, 16);
   }
+  
   componentDidMount() {
     this.props.getPost(this.props.params.id);
   }
