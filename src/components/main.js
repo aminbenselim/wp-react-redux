@@ -4,18 +4,21 @@ import {Link} from 'react-router';
 
 class Main extends Component {
   componentWillMount() {
-    this.props.getPosts();
+    this.props.getPosts(1);
   }
 
   componentDidMount() {
   }
   renderPosts(posts) {
     return posts.map((post) => {
+     // var shortText = post.content.rendered.split('')
+     // .slice(0,post.content.rendered.indexOf('</p>')).join('') + '</p>';
      return (
         <div key={post.id} className="post">
           <Link style={{color:'black'}} to={"post/"+ post.id}>
             <h3 dangerouslySetInnerHTML={{__html: post.title.rendered}}></h3>
-          </Link>       
+          </Link>  
+          <div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}}></div>     
         </div>
       );
     });

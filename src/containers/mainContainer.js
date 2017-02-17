@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPosts: () => {
-      dispatch(getPosts())
+    getPosts: (page) => {
+      dispatch(getPosts(page))
       .then((response) => {
             if(!response.error){
               dispatch(getPostsSuccess(response.payload.data));

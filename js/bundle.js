@@ -4626,10 +4626,10 @@ var GET_POST_FAILURE = exports.GET_POST_FAILURE = 'GET_POST_FAILURE';
 var RESET_POST = exports.RESET_POST = 'RESET_POST';
 
 // Posts List action creators
-function getPosts() {
+function getPosts(page) {
   var request = (0, _axios2.default)({
     method: 'get',
-    url: '/nidhal/wp-json/wp/v2/posts',
+    url: '/nidhal/wp-json/wp/v2/posts?context=embed&per_page=4&page=' + page,
     headers: []
   });
 
@@ -15099,7 +15099,7 @@ var Main = function (_Component) {
   _createClass(Main, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.props.getPosts();
+      this.props.getPosts(1);
     }
   }, {
     key: 'componentDidMount',
@@ -15108,6 +15108,8 @@ var Main = function (_Component) {
     key: 'renderPosts',
     value: function renderPosts(posts) {
       return posts.map(function (post) {
+        // var shortText = post.content.rendered.split('')
+        // .slice(0,post.content.rendered.indexOf('</p>')).join('') + '</p>';
         return _react2.default.createElement(
           'div',
           { key: post.id, className: 'post' },
@@ -15115,7 +15117,8 @@ var Main = function (_Component) {
             _reactRouter.Link,
             { style: { color: 'black' }, to: "post/" + post.id },
             _react2.default.createElement('h3', { dangerouslySetInnerHTML: { __html: post.title.rendered } })
-          )
+          ),
+          _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: post.excerpt.rendered } })
         );
       });
     }
@@ -15460,8 +15463,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    getPosts: function getPosts() {
-      dispatch((0, _actions.getPosts)()).then(function (response) {
+    getPosts: function getPosts(page) {
+      dispatch((0, _actions.getPosts)(page)).then(function (response) {
         if (!response.error) {
           dispatch((0, _actions.getPostsSuccess)(response.payload.data));
         } else {

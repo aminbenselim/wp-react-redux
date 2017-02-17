@@ -13,10 +13,10 @@ export const RESET_POST = 'RESET_POST';
 
 
 // Posts List action creators
-export function getPosts() {
+export function getPosts(page) {
   const request = axios({
     method: 'get',
-    url: '/nidhal/wp-json/wp/v2/posts',
+    url: `/nidhal/wp-json/wp/v2/posts?context=embed&per_page=4&page=${page}`,
     headers: []
   });
 
