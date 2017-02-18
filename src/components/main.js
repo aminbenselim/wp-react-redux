@@ -14,12 +14,14 @@ class Main extends Component {
 
   renderPosts(posts) {
     return posts.map(post => {
+      let excerpt = post.excerpt.rendered;
+      excerpt = excerpt.replace('[&hellip;]','');
       return (
         <div key={post.id} className="post">
           <Link style={{ color: "black" }} to={"post/" + post.id}>
             <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
           </Link>
-          <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
+          <div dangerouslySetInnerHTML={{ __html: excerpt }} />
            <Link to={"post/" + post.id}>
             <h4>read more</h4>
           </Link>

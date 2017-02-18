@@ -18,3 +18,4 @@ function nidhal_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'nidhal_scripts' );
+
