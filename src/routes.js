@@ -3,8 +3,9 @@ import { Route, IndexRoute } from 'react-router';
 
 import Main from './containers/maincontainer';
 import Single from './containers/singlecontainer';
-import App from './components/app'
+import App from './components/app';
 import SingleContain from './components/singleContain';
+import NotFound from './components/404';
 
 export default (
   <Route path="/" component={App}>
@@ -12,5 +13,6 @@ export default (
     <Route path="post" component={SingleContain}> 
          <Route path=":id" component={Single}/>
     </Route>
+    <Route path="*" component={NotFound}/>
   </Route>
 );

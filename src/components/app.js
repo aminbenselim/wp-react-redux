@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 
 export default class App extends Component {
     render() {
-        return (
-            <div className='main'>
+    return (
+      <main className="container" >
             {this.props.children}
-            </div>
+            </main>
         );
     }
 }
