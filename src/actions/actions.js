@@ -16,7 +16,7 @@ export const RESET_POST = 'RESET_POST';
 export function getPosts(page) {
   const request = axios({
     method: 'get',
-    url: `/nidhal/wp-json/wp/v2/posts?context=embed&per_page=4&page=${page}`,
+    url: `/wp-json/wp/v2/posts?context=embed&per_page=4&page=${page}`,
     headers: []
   });
 
@@ -45,7 +45,7 @@ export function getPostsFailure(error) {
 
 // Single Post action creators
 export function getPost(id) {
-  const request = axios.get(`/nidhal/wp-json/wp/v2/posts/${id}`);
+  const request = axios.get(`/wp-json/wp/v2/posts/${id}`);
 
   return {
     type: GET_POST,

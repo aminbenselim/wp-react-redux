@@ -19,7 +19,6 @@ class Main extends Component {
       let excerpt = post.excerpt.rendered;
       excerpt = excerpt.replace('[&hellip;]','');
       const style = {
-      direction: 'rtl',
       maxWidth: '500px',
       padding: '20px',
       margin: '0 auto',
