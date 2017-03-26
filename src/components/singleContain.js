@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class SingleContain extends Component {
+export default class SingleWrapper extends Component {
     render() {
         return (
             <div>

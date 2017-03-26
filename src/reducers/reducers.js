@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux';
-import MainReducer from './reducer_main';
-import SingleReducer from './reducer_single';
+import { combineReducers } from "redux";
+import MainReducer from "./reducer_main";
+import SingleReducer from "./reducer_single";
 
-const rootReducer = combineReducers({
+const reducers = combineReducers({
   postsList: MainReducer,
-  currentPost: SingleReducer,
+  currentPost: SingleReducer
 });
 
-export default rootReducer;
+export default reducers;
