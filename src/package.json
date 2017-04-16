@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "webpack": " webpack  --progress --colors"
+    "webpack": " webpack  --progress --colors",
+    "test": "jest --watch"
   },
   "dependencies": {
     "axios": "^0.15.3",
