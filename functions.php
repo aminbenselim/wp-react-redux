@@ -1,9 +1,9 @@
 <?php
 
-function nidhal_scripts() {
+function add_script() {
 
-	wp_enqueue_script( 'nidhal-react', get_template_directory_uri() . '/js/bundle.js', array(), '20151215', true );
+	wp_enqueue_script( 'js-bundle', get_template_directory_uri() . '/js/bundle.js', array(), '20151215', true );
 
 }
-add_action( 'wp_enqueue_scripts', 'nidhal_scripts' );
+add_action( 'wp_enqueue_scripts', 'add_script' );
 
