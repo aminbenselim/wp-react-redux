@@ -18,5 +18,3 @@ ReactDOM.render(
   </Provider>
   ,document.getElementById('main'));
 
-export default store;
-
