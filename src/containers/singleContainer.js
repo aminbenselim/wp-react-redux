@@ -1,5 +1,5 @@
 import SinglePost from '../components/single.js';
-import { getPost, getPostSuccess, getPostFailure, resetPost} from '../actions/actions';
+import { getPost, getPostSuccess, getPostFailure, resetPost} from '../actions/actionCreators';
 import { connect } from 'react-redux';
 
 

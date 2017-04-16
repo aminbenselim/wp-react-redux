@@ -9,21 +9,18 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                  exclude: /(node_modules|bower_components)/,
                  test: /\.js$/,
-                 loader: 'babel-loader',
-                 query: {
-                      presets: [
-                         require.resolve('babel-preset-es2015'),
-                         require.resolve('babel-preset-react'),
-                               ]
-                 }
+                 use: ['babel-loader']
              },
              {
                 test: /\.scss$/,
-                loaders: ['style', 'css', 'sass']
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "sass-loader"]
             }
          ]
      },

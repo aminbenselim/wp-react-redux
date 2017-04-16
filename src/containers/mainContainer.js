@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getPosts, getPostsSuccess, getPostsFailure } from './../actions/actions';
+import { getPosts, getPostsSuccess, getPostsFailure } from './../actions/actionCreators';
 import Main from '../components/main';
 
 
@@ -18,8 +18,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getPosts(page))
       .then((response) => {
             if(!response.error){
-              posts = posts.concat(response.payload.data);
-              dispatch(getPostsSuccess(posts,
+              newPosts = posts.concat(response.payload.data);
+              dispatch(getPostsSuccess(newPosts,
               +response.payload.headers['x-wp-totalpages']));
             } else {
               dispatch(getPostsFailure(response.payload.data));

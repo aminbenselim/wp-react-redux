@@ -3,7 +3,7 @@ import {
   GET_POST_SUCCESS,
   GET_POST_FAILURE,
   RESET_POST
-} from "./../actions/actions";
+} from "./../actions/actionTypes";
 
 const INITIAL_STATE = { post: null, error: null, loading: false };
 

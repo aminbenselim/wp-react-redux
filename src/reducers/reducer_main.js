@@ -2,7 +2,7 @@ import {
   GET_POSTS,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE
-} from "./../actions/actions";
+} from "./../actions/actionTypes";
 
 const INITIAL_STATE = { posts: [], error: null, loading: false, totalpages: 0 };
 
