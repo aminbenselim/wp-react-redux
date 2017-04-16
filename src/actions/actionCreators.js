@@ -1,18 +1,19 @@
+import axios from "axios";
 
-import axios from 'axios';
-
-import * as actionTypes from './actionTypes';
+import * as actionTypes from "./actionTypes";
 
 // Posts List action creators
 export function getPosts(page) {
-  const request = axios.get( `/wp-json/wp/v2/posts?context=embed&per_page=4&page=${page}`);
+  const request = axios.get(
+    `/wp-json/wp/v2/posts?context=embed&per_page=4&page=${page}`
+  );
   return {
     type: actionTypes.GET_POSTS,
     payload: request
   };
 }
 
-export function getPostsSuccess(posts,totalpages,previous) {
+export function getPostsSuccess(posts, totalpages, previous) {
   return {
     type: actionTypes.GET_POSTS_SUCCESS,
     payload: posts,
@@ -28,7 +29,6 @@ export function getPostsFailure(error) {
   };
 }
 
-
 // Single Post action creators
 export function getPost(id) {
   const request = axios.get(`/wp-json/wp/v2/posts/${id}`);
@@ -38,7 +38,6 @@ export function getPost(id) {
     payload: request
   };
 }
-
 
 export function getPostSuccess(currentPost) {
   return {
@@ -54,8 +53,8 @@ export function getPostFailure(error) {
   };
 }
 
-export function resetPost(){
+export function resetPost() {
   return {
     type: actionTypes.RESET_POST
-  }
+  };
 }

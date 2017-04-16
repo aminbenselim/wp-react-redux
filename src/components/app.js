@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
 export default class App extends Component {
-    render() {
+  render() {
     return (
-      <main className="container" >
-            {this.props.children}
-            </main>
-        );
-    }
+      <main className="container">
+        {this.props.children}
+      </main>
+    );
+  }
 }
