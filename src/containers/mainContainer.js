@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => {
     getPosts: page => {
       dispatch(getPosts(page)).then(response => {
         if (!response.error) {
-          newPosts = posts.concat(response.payload.data);
+          let newPosts = posts.concat(response.payload.data);
           dispatch(
             getPostsSuccess(
               newPosts,
